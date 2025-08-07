@@ -1,3 +1,29 @@
-node_modules
-target
-./host/src/agent_template.wasm
+# Rust
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build
+*.wasm
+/dist/
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
