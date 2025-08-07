@@ -1,0 +1,3 @@
+node_modules
+target
+./host/src/agent_template.wasm

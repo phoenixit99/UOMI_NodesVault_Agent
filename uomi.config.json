@@ -1,0 +1,33 @@
+{
+  "local_file_path": "../agent-template/src/request_input_file_example.txt",
+  "api": {
+      "timeout_ms": 30000,
+      "retry_attempts": 3,
+      "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "User-Agent": "UOMI-Client/1.0"
+      }
+  },
+  "models": {
+      "1": {
+          "name": "llama2",
+          "url": "http://localhost:11434/api/generate",
+          "api_key": ""
+      },
+      "2": {
+          "name": "mistral",
+          "url": "http://localhost:11434/api/generate",
+          "api_key": ""
+      },
+      "3": {
+          "name": "codellama",
+          "url": "http://localhost:11434/api/generate",
+          "api_key": ""
+      }
+  },
+  "ipfs": {
+      "gateway": "https://ipfs.io/ipfs",
+      "timeout_ms": 10000
+  }
+}
