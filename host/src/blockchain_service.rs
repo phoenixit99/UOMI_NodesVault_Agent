@@ -66,7 +66,7 @@ pub async fn get_wallet_balance(address: &str) -> Result<ExplorerResponse, Block
     headers.insert("accept", "*/*".parse().unwrap());
     headers.insert("user-agent", "uomi-agent/1.0".parse().unwrap());
     
-    println!("Calling UOMI API: {}", api_url);
+    // API call in progress
     
     let response = client
         .get(&api_url)
@@ -85,8 +85,6 @@ pub async fn get_wallet_balance(address: &str) -> Result<ExplorerResponse, Block
     }
 
     let response_text = response.text().await?;
-    println!("API Response: {}", response_text);
-
     match serde_json::from_str::<ExplorerResponse>(&response_text) {
         Ok(response) => Ok(response),
         Err(e) => {
