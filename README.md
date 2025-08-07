@@ -38,8 +38,11 @@ npm install
 npm install -g local-cors-proxy
 lcp --proxyUrl https://explorer.uomi.ai
 
-# Build and run the agent
-sh ./bin/build_and_run_host.sh
+# Build the WASM module
+./bin/build_wasm.sh
+
+# Run the agent
+cd host && cargo run --bin wasm-host -- check-balance YOUR_WALLET_ADDRESS
 ```
 
 ## 💡 Features
