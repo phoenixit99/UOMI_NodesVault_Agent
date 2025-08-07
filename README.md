@@ -147,6 +147,6 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 
 Built with ❤️ for the UOMI Network
 
-[Website](https://uomi.network) · [Documentation](https://docs.uomi.network) · [GitHub](https://github.com/uomi-network)
+[Website](https://uomi.network) · [Documentation](https://docs.uomi.network) 
 
 </div>
