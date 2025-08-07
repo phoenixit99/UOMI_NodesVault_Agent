@@ -21,10 +21,28 @@ pub enum BlockchainError {
 pub struct ExplorerResponse {
     pub block_number_balance_updated_at: u64,
     pub coin_balance: String,
-    pub hash: String,
-    pub is_contract: bool,
-    #[serde(default)]
+    pub creation_transaction_hash: Option<String>,
+    pub creator_address_hash: Option<String>,
+    pub ens_domain_name: Option<String>,
     pub exchange_rate: Option<f64>,
+    pub has_beacon_chain_withdrawals: bool,
+    pub has_logs: bool,
+    pub has_token_transfers: bool,
+    pub has_tokens: bool,
+    pub has_validated_blocks: bool,
+    pub hash: String,
+    pub implementations: Vec<String>,
+    pub is_contract: bool,
+    pub is_scam: bool,
+    pub is_verified: bool,
+    pub metadata: Option<serde_json::Value>,
+    pub name: Option<String>,
+    pub private_tags: Vec<String>,
+    pub proxy_type: Option<String>,
+    pub public_tags: Vec<String>,
+    pub token: Option<serde_json::Value>,
+    pub watchlist_address_id: Option<String>,
+    pub watchlist_names: Vec<String>,
 }
 
 
@@ -39,20 +57,14 @@ pub async fn get_wallet_balance(address: &str) -> Result<ExplorerResponse, Block
 
     let client = Client::builder()
         .timeout(Duration::from_secs(10))
-        .danger_accept_invalid_certs(true)
-        .use_native_tls()
         .build()?;
 
     // Use UOMI Explorer API endpoint
-    let api_url = format!("http://localhost:8010/proxy/api/v2/addresses/{}", address);
+    let api_url = format!("https://explorer.uomi.ai/api/v2/addresses/{}", address);
     
     let mut headers = HeaderMap::new();
-    headers.insert("accept", "application/json".parse().unwrap());
-    
-    // Add UOMI API key if you have one
-    if let Ok(api_key) = std::env::var("UOMI_API_KEY") {
-        headers.insert("Authorization", format!("Bearer {}", api_key).parse().unwrap());
-    }
+    headers.insert("accept", "*/*".parse().unwrap());
+    headers.insert("user-agent", "uomi-agent/1.0".parse().unwrap());
     
     println!("Calling UOMI API: {}", api_url);
     
