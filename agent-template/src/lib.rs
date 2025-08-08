@@ -137,15 +137,39 @@ pub extern "C" fn run() {
                         response_parts.push("\nNote: This is a smart contract address".to_string());
                     }
 
-                    let response_message = response_parts.join("\n");
-                    utils::save_output(response_message.as_bytes());
+                    let response_text = response_parts.join("\n");
+                    
+                    // Format as JSON response
+                    let json_response = serde_json::json!({
+                        "response": response_text,
+                        "time_taken": 0.5, // Placeholder - could be calculated
+                        "tokens_per_second": 50.0, // Placeholder
+                        "total_tokens_generated": 100 // Placeholder
+                    });
+                    
+                    let response_json = serde_json::to_string(&json_response).unwrap();
+                    utils::save_output(response_json.as_bytes());
                 } else {
-                    utils::save_output(b"Sorry, I couldn't parse the balance data. Please try again later.");
+                    let error_response = serde_json::json!({
+                        "response": "Sorry, I couldn't parse the balance data. Please try again later.",
+                        "time_taken": 0.1,
+                        "tokens_per_second": 10.0,
+                        "total_tokens_generated": 20
+                    });
+                    let error_json = serde_json::to_string(&error_response).unwrap();
+                    utils::save_output(error_json.as_bytes());
                 }
             }
             Err(e) => {
                 log(&format!("Error fetching balance: {:?}", e));
-                utils::save_output(b"Sorry, I couldn't fetch your balance at the moment. Please try again later.");
+                let error_response = serde_json::json!({
+                    "response": "Sorry, I couldn't fetch your balance at the moment. Please try again later.",
+                    "time_taken": 0.1,
+                    "tokens_per_second": 10.0,
+                    "total_tokens_generated": 20
+                });
+                let error_json = serde_json::to_string(&error_response).unwrap();
+                utils::save_output(error_json.as_bytes());
             }
         }
     } else {
@@ -158,7 +182,24 @@ pub extern "C" fn run() {
         
         let request = utils::prepare_request(&modified_messages_str);
         let response = utils::call_ai_service(1, request);
-        utils::save_output(&response);
+        
+        // Ensure AI response is also JSON formatted
+        let ai_response_str = String::from_utf8_lossy(&response);
+        let json_response = if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(&ai_response_str) {
+            // If AI already returns JSON, use it
+            parsed
+        } else {
+            // If AI returns plain text, wrap it in JSON
+            serde_json::json!({
+                "response": ai_response_str.trim(),
+                "time_taken": 0.3,
+                "tokens_per_second": 30.0,
+                "total_tokens_generated": 50
+            })
+        };
+        
+        let response_json = serde_json::to_string(&json_response).unwrap();
+        utils::save_output(response_json.as_bytes());
     }
 }
 

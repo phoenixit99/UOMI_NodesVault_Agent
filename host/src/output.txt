@@ -1,5 +1,1 @@
-Wallet Balance for 0xad749097119d27495987dA69F9D8E19366E2f287:
-
-Native Balance: 10.000000 UOMI
-
-Last updated at block: 5621768
+{"response":"Wallet Balance for 0xad749097119d27495987dA69F9D8E19366E2f287:\n\nNative Balance: 10.000000 UOMI\n\nLast updated at block: 5642178","time_taken":0.5,"tokens_per_second":50.0,"total_tokens_generated":100}

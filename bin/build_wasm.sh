@@ -1,16 +1,9 @@
-#!/bin/bash
+cd agent-template 
+cargo build --target wasm32-unknown-unknown --release
+cd ..
 
-# Exit on any error
-set -e
+# Copy WASM file with correct filename
+cp ./target/wasm32-unknown-unknown/release/uomi_nodes_vault_agent.wasm ./host/src/agent_template.wasm
 
-# Build WASM module in release mode
-cd agent-template
-cargo build --release --target wasm32-unknown-unknown
-
-# Create target directory if it doesn't exist
-mkdir -p ../target/wasm32-unknown-unknown/release/
-
-# Copy WASM file to expected location
-cp target/wasm32-unknown-unknown/release/uomi_nodes_vault_agent.wasm ../target/wasm32-unknown-unknown/release/uomi_nodesvault_agent.wasm
-
-echo "WASM build and setup completed successfully"
+cd host
+cargo run

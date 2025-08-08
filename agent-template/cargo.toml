@@ -1,5 +1,5 @@
 [package]
-name = "UOMI-NodesVault-Agent"
+name = "uomi_nodes_vault_agent"
 version = "0.1.0"
 edition = "2021"
 
